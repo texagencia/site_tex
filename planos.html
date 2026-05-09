@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Planos Exclusivos | Tex Agência</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#d4af37",
+                        "background": "#131313",
+                        "primary": "#f2ca50",
+                        "surface": "#131313",
+                        "on-background": "#e2e2e2",
+                        "surface-container": "#1f1f1f",
+                        "on-surface-variant": "#d0c5af",
+                        "outline-variant": "#4d4635",
+                        "on-primary": "#3c2f00",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-container-lowest": "#0e0e0e"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24; }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .gold-gradient::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -110%;
+            width: 55%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .gold-gradient:hover::after { left: 160%; }
+
+        .glass-nav {
+            background: rgba(19, 19, 19, 0.4);
+            backdrop-filter: blur(20px);
+            transition: background 0.5s ease, border-color 0.5s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .glass-nav.nav-scrolled {
+            background: rgba(13, 13, 13, 0.97) !important;
+            border-bottom-color: rgba(242, 202, 80, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(31, 31, 31, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(77, 70, 53, 0.3);
+            transition: border-color 0.45s ease, box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(242, 202, 80, 0.55);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
+            transform: translateY(-6px);
+        }
+
+        ::selection { background: #f2ca50; color: #131313; }
+        body { background-color: #131313; color: #e2e2e2; animation: pageReveal 0.55s ease forwards; }
+        @keyframes pageReveal { from { opacity: 0; } to { opacity: 1; } }
+        html { scroll-behavior: smooth; }
+
+        .divider-line {
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .divider-line.is-visible { transform: scaleX(1); }
+
+        .section-banner img { will-change: transform; transform: scale(1.15); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary antialiased">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+    <div class="flex justify-between items-center px-6 md:px-12 py-6 max-w-[1920px] mx-auto">
+        <div class="text-2xl font-black tracking-tighter text-white font-headline">
+            <a href="code.html"><img src="logo.png" alt="Tex Agência Oficial" class="w-40 md:w-56 h-auto max-h-20 hover:scale-105 transition-transform drop-shadow-[0_0_15px_rgba(242,202,80,0.5)] object-contain object-left" onerror="this.outerHTML='Tex <span class=\'text-primary-container\'>Agência</span>'"></a>
+        </div>
+        <div class="hidden md:flex items-center space-x-12">
+            <a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="code.html#services">Services</a>
+            <a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="code.html#process">Process</a>
+            <a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="code.html#cases">Cases</a>
+            <a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="code.html#about">About</a>
+            <a class="font-headline font-bold tracking-tight uppercase text-primary transition-colors text-sm" href="planos.html">Planos</a>
+        </div>
+        <button class="gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs px-8 py-4 transition-all duration-300 hover:scale-95 active:scale-90">
+            Agendar Diagnóstico
+        </button>
+    </div>
+</nav>
+
+<main class="relative pt-40 pb-32 overflow-hidden">
+    <!-- Overlay Graphic & Branding -->
+    <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none -z-10"></div>
+    <div class="absolute bottom-1/4 left-0 translate-y-1/3 -translate-x-1/4 text-[25vw] font-headline font-black text-white/[0.02] tracking-tighter select-none pointer-events-none -z-10">TEX</div>
+
+    <!-- Hero Header Planos -->
+    <div class="text-center max-w-4xl mx-auto px-6 mb-24" data-aos="fade-up">
+        <span class="inline-block font-label text-primary tracking-[0.3em] uppercase text-xs mb-6 opacity-80">Investimento Estratégico</span>
+        <h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6">Nossos <span class="text-primary-container">Planos</span></h1>
+        <p class="font-body text-xl text-on-surface-variant font-light">Ecossistemas de alta conversão estruturados para escalar suas vendas com exclusividade e previsibilidade.</p>
+    </div>
+
+    <!-- Seção: Corretor -->
+    <section class="max-w-7xl mx-auto px-6 mb-28">
+        <div class="section-banner mb-14 relative h-56 md:h-72 overflow-hidden border border-outline-variant/20" data-aos="fade-up">
+            <img src="https://images.unsplash.com/photo-1583263496887-4e3046c78090?w=1400&q=80&auto=format&fit=crop" alt="Corretor de imóveis de luxo" class="absolute inset-0 w-full h-full object-cover grayscale brightness-40 object-center" />
+            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
+            <div class="absolute inset-0 flex items-end p-10 md:p-14">
+                <div>
+                    <span class="font-headline text-xs font-bold uppercase tracking-[0.3em] text-primary/70 mb-2 block">01</span>
+                    <h2 class="font-headline text-3xl md:text-5xl font-bold text-white tracking-tight mb-3">Corretor</h2>
+                    <p class="font-body text-on-surface-variant font-light max-w-lg text-sm md:text-base">Soluções para corretores autônomos que querem escalar presença, gerar leads qualificados e construir autoridade de mercado.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Individual -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="100">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviço Individual</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Contrate o que precisa</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Escolha um serviço específico conforme o momento da sua operação.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Gestão de Tráfego Pago</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Social Media & Conteúdo</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Produção Audiovisual</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Estratégica</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Combinados -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="200">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviços Combinados</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Monte sua estratégia</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Combine dois ou mais serviços em uma proposta integrada e personalizada.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + Social Media</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Audiovisual + Edição de Vídeos</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Branding + Posicionamento</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + Consultoria</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Pacote Corretor -->
+            <div class="glass-card p-8 flex flex-col relative group" style="border-color: rgba(242,202,80,0.4);" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-3 left-8 gold-gradient text-on-primary text-[10px] font-bold uppercase tracking-widest px-4 py-1">Pacote Corretor</div>
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start mt-2">Pacote Completo</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Ecossistema integrado</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Presença completa e geração de leads contínua para o corretor que quer escalar.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Gestão de Tráfego Pago</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Social Media Completa</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Diária de Audiovisual / mês</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Edição de Vídeos (4/mês)</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Quinzenal</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Relatórios de Performance</span></li>
+                </ul>
+                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divisor -->
+    <div class="max-w-7xl mx-auto px-6 mb-28">
+        <div class="divider-line h-px bg-outline-variant/30"></div>
+    </div>
+
+    <!-- Seção: Imobiliária -->
+    <section class="max-w-7xl mx-auto px-6 mb-28">
+        <div class="section-banner mb-14 relative h-56 md:h-72 overflow-hidden border border-outline-variant/20" data-aos="fade-up">
+            <img src="https://images.unsplash.com/photo-1748679767437-00b5c0327b1a?w=1400&q=80&auto=format&fit=crop" alt="Imobiliária de luxo" class="absolute inset-0 w-full h-full object-cover grayscale brightness-40 object-center" />
+            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
+            <div class="absolute inset-0 flex items-end p-10 md:p-14">
+                <div>
+                    <span class="font-headline text-xs font-bold uppercase tracking-[0.3em] text-primary/70 mb-2 block">02</span>
+                    <h2 class="font-headline text-3xl md:text-5xl font-bold text-white tracking-tight mb-3">Imobiliária</h2>
+                    <p class="font-body text-on-surface-variant font-light max-w-lg text-sm md:text-base">Estratégias de marketing e captação para imobiliárias que precisam de visibilidade, diferenciação e volume de leads qualificados.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Individual -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="100">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviço Individual</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Contrate o que precisa</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Ative um serviço pontual alinhado à demanda atual da sua imobiliária.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Gestão de Tráfego para Captação</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Social Media Corporativa</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Audiovisual de Imóveis</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual Corporativa</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM & Automações</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Combinados -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="200">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviços Combinados</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Monte sua estratégia</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Una dois ou mais serviços em uma proposta personalizada para sua operação.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + Social Media</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Audiovisual + Captação</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Branding + Social Media</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM + Tráfego</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Pacote Imobiliária -->
+            <div class="glass-card p-8 flex flex-col relative group" style="border-color: rgba(242,202,80,0.4);" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-3 left-8 gold-gradient text-on-primary text-[10px] font-bold uppercase tracking-widest px-4 py-1">Pacote Imobiliária</div>
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start mt-2">Pacote Completo</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Operação completa</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Ecossistema omnichannel para imobiliárias que querem liderar o mercado regional.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Gestão de Tráfego Avançada</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Social Media & Conteúdo</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Diárias de Audiovisual / mês</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual Corporativa</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM e Automação de Leads</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Mensal & Relatórios</span></li>
+                </ul>
+                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divisor -->
+    <div class="max-w-7xl mx-auto px-6 mb-28">
+        <div class="divider-line h-px bg-outline-variant/30"></div>
+    </div>
+
+    <!-- Seção: Incorporadora & Construtora -->
+    <section class="max-w-7xl mx-auto px-6 mb-16">
+        <div class="section-banner mb-14 relative h-56 md:h-72 overflow-hidden border border-outline-variant/20" data-aos="fade-up">
+            <img src="https://images.unsplash.com/photo-1748273491101-9d1db5d1814d?w=1400&q=80&auto=format&fit=crop" alt="Incorporadora e construtora" class="absolute inset-0 w-full h-full object-cover grayscale brightness-40 object-center" />
+            <div class="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
+            <div class="absolute inset-0 flex items-end p-10 md:p-14">
+                <div>
+                    <span class="font-headline text-xs font-bold uppercase tracking-[0.3em] text-primary/70 mb-2 block">03</span>
+                    <h2 class="font-headline text-3xl md:text-5xl font-bold text-white tracking-tight mb-3">Incorporadora & Construtora</h2>
+                    <p class="font-body text-on-surface-variant font-light max-w-lg text-sm md:text-base">Soluções de alto impacto para lançamentos, posicionamento de empreendimentos e geração de demanda qualificada em escala.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Individual -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="100">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviço Individual</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Contrate o que precisa</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Ative um serviço específico para sua fase de lançamento ou campanha.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Campanha de Lançamento</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Audiovisual Cinematográfico</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Filmagem com Drone & IA</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual do Empreendimento</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria de Posicionamento</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Combinados -->
+            <div class="glass-card p-8 flex flex-col relative group" data-aos="fade-up" data-aos-delay="200">
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start">Serviços Combinados</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Monte sua estratégia</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Combine serviços estratégicos para cobrir toda a jornada do seu empreendimento.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Lançamento + Audiovisual</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Drone + Edição Cinematográfica</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Branding + Social Media</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + CRM</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
+                </ul>
+                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+            </div>
+
+            <!-- Pacote Empresa -->
+            <div class="glass-card p-8 flex flex-col relative group" style="border-color: rgba(242,202,80,0.4);" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-3 left-8 gold-gradient text-on-primary text-[10px] font-bold uppercase tracking-widest px-4 py-1">Pacote Empresa</div>
+                <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-6 self-start mt-2">Pacote Completo</span>
+                <h3 class="font-headline text-lg font-bold text-white mb-3 uppercase tracking-wide">Máquina de vendas</h3>
+                <p class="font-body text-xs text-on-surface-variant font-light mb-6 leading-relaxed">Estrutura completa de marketing e vendas para incorporadoras e construtoras de alta performance.</p>
+                <ul class="flex-1 space-y-3 mb-8">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Campanhas Multi-plataforma</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Produção Cinematográfica</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Filmagem com Drone & Efeitos IA</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM de Alto Nível</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Estratégica</span></li>
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Board Advisory (opcional)</span></li>
+                </ul>
+                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container-lowest py-24 px-12 border-t border-white/5">
+    <div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+        <div class="lg:col-span-1">
+            <div class="text-3xl font-black text-primary-container mb-6 font-headline tracking-tighter">
+                <a href="code.html"><img src="logo.png" alt="Tex Agência Oficial" class="w-40 md:w-56 h-auto max-h-20 opacity-80 hover:opacity-100 transition-opacity object-contain object-left" onerror="this.outerHTML='Tex Agência'"></a>
+            </div>
+            <p class="font-body text-sm tracking-wide text-white/50 leading-relaxed">
+                © 2024 Tex Agência. The Architectural Monolith of Real Estate Growth.
+            </p>
+        </div>
+        <div>
+            <h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Sitemap</h5>
+            <ul class="space-y-4">
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="code.html#services">Services</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="code.html#process">Process</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="code.html#cases">Cases</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="code.html#about">About</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="planos.html">Planos</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Legal</h5>
+            <ul class="space-y-4">
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Privacy Policy</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Connect</h5>
+            <ul class="space-y-4">
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">LinkedIn</a></li>
+                <li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true, offset: 60, duration: 900, easing: 'ease-out-quart' });
+
+    // Nav scroll state
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        navEl.classList.toggle('nav-scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // Section banner parallax
+    const bannerImgs = document.querySelectorAll('.section-banner img');
+    const bannerParallax = () => {
+        bannerImgs.forEach(img => {
+            const rect = img.closest('.section-banner').getBoundingClientRect();
+            const offset = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.1;
+            img.style.transform = `translateY(${offset}px) scale(1.15)`;
+        });
+    };
+    window.addEventListener('scroll', bannerParallax, { passive: true });
+    bannerParallax();
+
+    // Divider line reveal
+    document.querySelectorAll('.divider-line').forEach(el => {
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) { el.classList.add('is-visible'); }
+        }, { threshold: 0.5 }).observe(el);
+    });
+</script>
+</body>
+</html>

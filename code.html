@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tex Agência | Transformando Experiência em Resultado</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@200;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-container": "#97b0ff",
+                        "surface-tint": "#e9c349",
+                        "surface-container": "#1f1f1f",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#3c2f00",
+                        "inverse-on-surface": "#303030",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#b4c5ff",
+                        "inverse-primary": "#735c00",
+                        "on-surface-variant": "#d0c5af",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "inverse-surface": "#e2e2e2",
+                        "on-secondary": "#313030",
+                        "on-primary-container": "#554300",
+                        "on-secondary-fixed-variant": "#474746",
+                        "surface-variant": "#353535",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "primary-container": "#d4af37",
+                        "outline-variant": "#4d4635",
+                        "tertiary-fixed": "#dbe1ff",
+                        "background": "#131313",
+                        "primary": "#f2ca50",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary": "#c8c6c5",
+                        "on-secondary-container": "#b7b5b4",
+                        "tertiary": "#bfcdff",
+                        "on-tertiary-fixed": "#00174b",
+                        "outline": "#99907c",
+                        "on-tertiary-fixed-variant": "#27438a",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface-bright": "#393939",
+                        "secondary-container": "#474746",
+                        "on-tertiary": "#082b72",
+                        "on-background": "#e2e2e2",
+                        "surface": "#131313",
+                        "on-primary-fixed": "#241a00",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#1b1b1b",
+                        "primary-fixed": "#ffe088",
+                        "on-surface": "#e2e2e2",
+                        "on-tertiary-container": "#254188",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-primary-fixed-variant": "#574500",
+                        "surface-container-highest": "#353535"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24; }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .gold-gradient::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -110%;
+            width: 55%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .gold-gradient:hover::after { left: 160%; }
+
+        .glass-nav {
+            background: rgba(19, 19, 19, 0.4);
+            backdrop-filter: blur(20px);
+            transition: background 0.5s ease, border-color 0.5s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .glass-nav.nav-scrolled {
+            background: rgba(13, 13, 13, 0.97) !important;
+            border-bottom-color: rgba(242, 202, 80, 0.08);
+        }
+
+        ::selection { background: #f2ca50; color: #131313; }
+
+        html { scroll-behavior: smooth; }
+        body { animation: pageReveal 0.55s ease forwards; }
+        @keyframes pageReveal { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Process line draw */
+        .process-line {
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .process-line.is-visible { transform: scaleX(1); }
+
+        /* Process step reveal */
+        [data-step] {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        [data-step].step-visible { opacity: 1; transform: translateY(0); }
+
+        /* Hero parallax */
+        .hero-parallax { will-change: transform; }
+
+        /* Partners marquee */
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 48s linear infinite;
+            will-change: transform;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+<div class="flex justify-between items-center px-6 md:px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-black tracking-tighter text-white font-headline">
+                <a href="code.html"><img src="logo.png" alt="Tex Agência Oficial" class="w-40 md:w-56 h-auto max-h-20 hover:scale-105 transition-transform drop-shadow-[0_0_15px_rgba(242,202,80,0.5)] object-contain object-left"></a>
+</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="#services">Services</a>
+<a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="#process">Process</a>
+<a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="#cases">Cases</a>
+<a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="#about">About</a>
+<a class="font-headline font-bold tracking-tight uppercase text-white/70 hover:text-white transition-colors text-sm" href="planos.html">Planos</a>
+</div>
+<button class="gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs px-8 py-4 transition-all duration-300 hover:scale-95 active:scale-90">
+                Agendar Diagnóstico
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="hero-parallax w-full h-full object-cover opacity-40 grayscale-[0.5]" data-alt="Ultra-modern luxury penthouse interior with floor-to-ceiling windows overlooking a city skyline at dusk with dramatic warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8xf21J9isNP8gT-RuJgT6rmth34OUBTAQQhm5UkWcWOCPmMuwaXP-TgmZk3NSpGzchWQsJVjFeB_IPGodPfRHEOpYvbgKvyUqE-H074NmyFuxVpQR59UDZqlMVvQP8MVFZpKlkz6H8jRzJu6sQzGiieTB0eh3OorrIz2LJyjVwU46KCz8Z1nvq2ahOjW_EoiauzQ1w0S064fWy3VyVVXNVX4wvcwBr3aFu8wKZsnOZAUAzCmh3pKHFTLq1p3l7MGs90qC7ZESx54"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/80 to-background"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-full flex justify-center text-[18vw] font-black text-white/[0.03] uppercase tracking-tighter whitespace-nowrap select-none pointer-events-none">TEX AGÊNCIA</div>
+</div>
+<div class="relative z-10 text-center max-w-5xl px-6" data-aos="fade-up" data-aos-duration="1000">
+<span class="inline-block font-label text-primary tracking-[0.3em] uppercase text-xs mb-6 opacity-80">The Architectural Monolith of Growth</span>
+<h1 class="font-headline text-5xl md:text-8xl font-bold tracking-tighter text-white leading-tight mb-8">
+                    TRANSFORMANDO EXPERIÊNCIA EM <span class="text-primary-container">RESULTADO</span>
+</h1>
+<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                    Elevando o padrão do mercado imobiliário através de estratégias audiovisuais de alta performance e dominância digital.
+                </p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<button class="gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-sm px-12 py-5 transition-all">
+                        Agendar Diagnóstico
+                    </button>
+<button class="border border-outline-variant hover:bg-surface-container transition-colors text-white font-headline font-bold uppercase tracking-widest text-sm px-12 py-5">
+                        Conheça o Ecossistema
+                    </button>
+</div>
+</div>
+</section>
+<!-- Positioning Section -->
+<section class="py-32 px-6 md:px-12 bg-surface relative overflow-hidden">
+<div class="absolute -right-40 top-20 text-[15rem] font-headline font-black text-white/[0.02] -rotate-90 select-none pointer-events-none">TEX</div>
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center relative z-10">
+<div data-aos="fade-right">
+<span class="font-label text-primary-container tracking-[0.2em] uppercase text-xs mb-4 block">Positioning</span>
+<h2 class="font-headline text-4xl md:text-6xl font-bold text-white tracking-tighter mb-8">
+                        Dominância na <br/>Solução 360
+                    </h2>
+<p class="font-body text-on-surface-variant text-lg leading-relaxed mb-12 max-w-xl">
+                        Não somos apenas uma agência de social media. Somos o braço estratégico que consolida autoridade e escala faturamento através de um ecossistema integrado que cobre desde a captação cinematográfica até a conversão final no CRM.
+                    </p>
+<div class="grid grid-cols-2 gap-8 border-l border-outline-variant pl-8">
+<div>
+<div class="font-headline text-4xl text-primary font-bold mb-2"><span data-counter="94" data-counter-suffix="%">94%</span></div>
+<div class="font-label text-on-surface-variant text-xs uppercase tracking-widest">Aumento em Retenção</div>
+</div>
+<div>
+<div class="font-headline text-4xl text-primary font-bold mb-2"><span data-counter="50" data-counter-prefix="+R$" data-counter-suffix="M">+R$50M</span></div>
+<div class="font-label text-on-surface-variant text-xs uppercase tracking-widest">VGV Transacionado</div>
+</div>
+</div>
+</div>
+<div class="relative" data-aos="fade-left">
+<div class="aspect-[4/5] bg-surface-container-high relative overflow-hidden">
+<img class="w-full h-full object-cover brightness-90 grayscale-[0.2]" data-alt="Corretor entregando as chaves de uma casa para cliente na Tex Agência" src="hero-keys.png"/>
+</div>
+<div class="absolute -bottom-12 -left-12 hidden md:block w-64 h-64 bg-primary-container p-8">
+<span class="material-symbols-outlined text-on-primary text-5xl mb-4">architecture</span>
+<p class="text-on-primary font-headline font-bold text-xl leading-tight">Sólido como alvenaria. Fluido como digital.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section class="py-32 px-6 md:px-12 bg-surface-container-low" id="services">
+<div class="max-w-[1920px] mx-auto">
+<div class="mb-24">
+<span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">The Pillars</span>
+<h2 class="font-headline text-4xl md:text-6xl font-bold text-white tracking-tighter">Nossos Serviços</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-px bg-outline-variant/20 border border-outline-variant/20" data-aos="fade-up">
+
+<!-- 01 Audiovisual Premium — large, split with image -->
+<div class="md:col-span-8 bg-surface-container hover:bg-surface-container-high transition-all duration-500 group relative overflow-hidden flex flex-col md:flex-row">
+    <div class="p-12 flex-1 relative z-10">
+        <div class="flex justify-between items-start mb-16">
+            <span class="text-primary-container font-headline text-6xl font-light">01</span>
+            <span class="material-symbols-outlined text-4xl text-white/20 group-hover:text-primary transition-colors duration-300">videocam</span>
+        </div>
+        <h3 class="font-headline text-3xl md:text-5xl font-bold text-white mb-6 uppercase tracking-tight">Audiovisual <br/><span class="text-primary">Premium</span></h3>
+        <p class="text-on-surface-variant font-body text-lg max-w-lg leading-relaxed">Produção de vídeos cinematográficos com efeitos potencializados por IA. Criamos experiências visuais que hipnotizam o lead antes mesmo da primeira palavra ser dita.</p>
+    </div>
+    <div class="md:w-72 lg:w-96 relative overflow-hidden hidden md:flex flex-shrink-0">
+        <img src="https://images.unsplash.com/photo-1574304904744-2e6919c5a2a9?w=800&q=80&auto=format&fit=crop" alt="Audiovisual cinematográfico" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 brightness-50 group-hover:brightness-70 transition-all duration-700" />
+        <div class="absolute inset-0 bg-gradient-to-r from-surface-container via-surface-container/50 to-transparent pointer-events-none"></div>
+    </div>
+</div>
+
+<!-- 02 Edição High-End -->
+<div class="md:col-span-4 bg-surface-container-low p-12 hover:bg-surface-container-high transition-all duration-500 group relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1759417501248-0aa9489dab3f?w=800&q=80&auto=format&fit=crop" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-[0.10] group-hover:opacity-[0.18] grayscale transition-all duration-500" />
+    <div class="relative z-10">
+        <div class="flex justify-between items-start mb-16">
+            <span class="text-primary-container font-headline text-6xl font-light">02</span>
+            <span class="material-symbols-outlined text-4xl text-white/20 group-hover:text-primary transition-colors duration-300">movie_edit</span>
+        </div>
+        <h3 class="font-headline text-2xl md:text-3xl font-bold text-white mb-6 uppercase tracking-tight">Edição de <br/>Vídeo High-End</h3>
+        <p class="text-on-surface-variant font-body leading-relaxed">Retenção extrema através de cortes rítmicos e design sonoro imersivo. Transformamos conteúdo bruto em ativos de vendas.</p>
+    </div>
+</div>
+
+<!-- 03 Social Media -->
+<div class="md:col-span-4 bg-surface-container-low p-12 hover:bg-surface-container-high transition-all duration-500 group relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1690883794145-e96486fbe66b?w=800&q=80&auto=format&fit=crop" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-[0.10] group-hover:opacity-[0.18] grayscale transition-all duration-500" />
+    <div class="relative z-10">
+        <div class="flex justify-between items-start mb-16">
+            <span class="text-primary-container font-headline text-5xl font-light">03</span>
+            <span class="material-symbols-outlined text-4xl text-white/20 group-hover:text-primary transition-colors duration-300">diversity_3</span>
+        </div>
+        <h3 class="font-headline text-2xl font-bold text-white mb-6 uppercase tracking-tight">Social Media <br/>&amp; Autoridade</h3>
+        <p class="text-on-surface-variant font-body leading-relaxed">Posicionamento estratégico para transformar corretores e incorporadoras em referências absolutas no mercado de luxo.</p>
+    </div>
+</div>
+
+<!-- 04 Tráfego Pago -->
+<div class="md:col-span-4 bg-surface-container p-12 hover:bg-surface-container-high transition-all duration-500 group relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-[0.10] group-hover:opacity-[0.18] grayscale transition-all duration-500" />
+    <div class="relative z-10">
+        <div class="flex justify-between items-start mb-16">
+            <span class="text-primary-container font-headline text-5xl font-light">04</span>
+            <span class="material-symbols-outlined text-4xl text-white/20 group-hover:text-primary transition-colors duration-300">ads_click</span>
+        </div>
+        <h3 class="font-headline text-2xl font-bold text-white mb-6 uppercase tracking-tight">Tráfego Pago <br/>Estratégico</h3>
+        <p class="text-on-surface-variant font-body leading-relaxed">Performance orientada a dados. Levamos sua mensagem exatamente para o público de altíssimo poder aquisitivo.</p>
+    </div>
+</div>
+
+<!-- 05 CRM -->
+<div class="md:col-span-4 bg-surface-container-low p-12 hover:bg-surface-container-high transition-all duration-500 group relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?w=800&q=80&auto=format&fit=crop" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-[0.10] group-hover:opacity-[0.18] grayscale transition-all duration-500" />
+    <div class="relative z-10">
+        <div class="flex justify-between items-start mb-16">
+            <span class="text-primary-container font-headline text-5xl font-light">05</span>
+            <span class="material-symbols-outlined text-4xl text-white/20 group-hover:text-primary transition-colors duration-300">database</span>
+        </div>
+        <h3 class="font-headline text-2xl font-bold text-white mb-6 uppercase tracking-tight">CRM &amp; Estrutura <br/>Comercial</h3>
+        <p class="text-on-surface-variant font-body leading-relaxed">Organização do fluxo de vendas para garantir que nenhum lead qualificado seja perdido no processo.</p>
+    </div>
+</div>
+
+</div>
+</div>
+</section>
+<!-- Real Estate Specialization -->
+<section class="relative py-32 bg-background overflow-hidden">
+<div class="max-w-[1920px] mx-auto px-6 md:px-12 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-24">
+<div class="lg:col-span-7" data-aos="fade-right">
+<span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">Specialization</span>
+<h2 class="font-headline text-4xl md:text-7xl font-bold text-white tracking-tighter leading-none">
+                            Especialistas no <br/>Ecossistema de Luxo
+                        </h2>
+</div>
+<div class="lg:col-span-5" data-aos="fade-left" data-aos-delay="150">
+<p class="font-body text-on-surface-variant text-xl leading-relaxed font-light">
+                            Desenvolvemos soluções sob medida para incorporadoras, construtoras e corretores que operam no topo da pirâmide imobiliária.
+                        </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="relative group cursor-pointer aspect-square overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-aos="fade-up" data-aos-delay="0" data-alt="Modern high-rise glass building facade at dusk reflecting city lights, emphasizing vertical scale and corporate prestige" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQpkEo58sbKSlW9O0BJs0BXfw2Q6_jVWtc9KbKmEVJXz-F6G9PXmjdmHWxyNsLMAHXhy97dJ3LKqqDhDZKh7H8zqhzsd56TuS44MSaCbmcokHaYFmioeO_XGppX9pTKJ9SqPdyZDlI9uuSy51PzTxoFkuT0aEBjezwHLU564ossdPwohk4KDnhD0Wen2juyfDBzEwIJKXnZc8fJygWuqbrHo4ygzSw3a1C6F-0bEO4TGaAbnXuiimX5rAKEEGJEk7oNbVh3zbvQbo"/>
+<div class="absolute inset-0 bg-background/40 group-hover:bg-background/10 transition-all"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="font-headline text-2xl font-bold text-white uppercase tracking-tight">Incorporadoras</h4>
+</div>
+</div>
+<div class="relative group cursor-pointer aspect-square overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-aos="fade-up" data-aos-delay="150" data-alt="Detailed view of a construction site for a luxury development with cranes and steel structures against a blue hour sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFnDLEtLALjvGmm513R-Y1NGXXtrCWAVyPOkNlKMxzXZonIrU5-2DuZkOk3hUxUBAScD0orIzs-lLXchiBS1WMXnfX6gSforF5z1_OlRSSTFdLZY-SHgnVIufay_XKag7Gy1kv3kXk0fzRO4oEu-JqeWCTaZDvRfP8AlPH_QS6FMXB_l2wKagwjPl_OwVVOXKTo0ZNVuQ-wu7G-IgFnqcpWe1KFeIcimTH7FgMHwINZ1dOeTLWPI8M3SjCtp8jCYiWt4O5iepL9FE"/>
+<div class="absolute inset-0 bg-background/40 group-hover:bg-background/10 transition-all"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="font-headline text-2xl font-bold text-white uppercase tracking-tight">Construtoras</h4>
+</div>
+</div>
+<div class="relative group cursor-pointer aspect-square overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" data-aos="fade-up" data-aos-delay="300" data-alt="Interior of a luxury real estate office with marble desks and dark wood paneling, featuring a high-end broker aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXnBJz8zF6vJMF9l_VWR-YvaizyuLGMAlo9Fniw7Ka4TfRBHAouRNbaU_6Qq2e2cZqiWL7dy--BwBUAab-Dqm_SQio1zgA_FaQCMnLhTYmNreLWmHKzIYrSpIgdrbE0a5dEsz3aVQ-ctfkOsHdgIkViyW7AIbLWpiUTPpbfeschCZjVLS4ctvbai-cJFsC3pkPEXy_cyceuoOOIMTZbzhBk6onyAfgiLbbhti4pF9dgEbPUtOGKQypk3eWkmHA5p8SruCjNZVxKNM"/>
+<div class="absolute inset-0 bg-background/40 group-hover:bg-background/10 transition-all"></div>
+<div class="absolute bottom-8 left-8">
+<h4 class="font-headline text-2xl font-bold text-white uppercase tracking-tight">Brokers High-End</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Process Section -->
+<section class="relative py-32 px-6 md:px-12 bg-surface-container-lowest overflow-hidden" id="process">
+<div class="absolute inset-0 flex items-center justify-center -z-0">
+    <div class="text-[30vw] font-headline font-black text-primary/[0.02] tracking-tighter select-none pointer-events-none">TEX</div>
+</div>
+<div class="max-w-[1920px] mx-auto relative z-10">
+<div class="text-center mb-32" data-aos="fade-up">
+<span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">The Methodology</span>
+<h2 class="font-headline text-4xl md:text-6xl font-bold text-white tracking-tighter">O Caminho da Dominância</h2>
+</div>
+<div class="flex flex-col md:flex-row justify-between gap-12 relative">
+<!-- Connector Line -->
+<div class="process-line absolute top-1/2 left-0 w-full h-px bg-outline-variant/30 hidden md:block"></div>
+<div class="relative z-10 flex-1 text-center group">
+<div class="w-20 h-20 bg-surface-container mx-auto flex items-center justify-center border border-outline-variant group-hover:border-primary transition-all duration-500 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+</div>
+<h4 class="font-headline font-bold text-white uppercase tracking-widest text-sm mb-4" data-step="1">Diagnóstico</h4>
+<p class="text-on-surface-variant text-xs font-label">Análise profunda da atual posição de mercado.</p>
+</div>
+<div class="relative z-10 flex-1 text-center group">
+<div class="w-20 h-20 bg-surface-container mx-auto flex items-center justify-center border border-outline-variant group-hover:border-primary transition-all duration-500 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">tactic</span>
+</div>
+<h4 class="font-headline font-bold text-white uppercase tracking-widest text-sm mb-4" data-step="2">Estratégia</h4>
+<p class="text-on-surface-variant text-xs font-label">Desenho do ecossistema de conteúdo e conversão.</p>
+</div>
+<div class="relative z-10 flex-1 text-center group">
+<div class="w-20 h-20 bg-surface-container mx-auto flex items-center justify-center border border-outline-variant group-hover:border-primary transition-all duration-500 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">destruction</span>
+</div>
+<h4 class="font-headline font-bold text-white uppercase tracking-widest text-sm mb-4" data-step="3">Execução</h4>
+<p class="text-on-surface-variant text-xs font-label">Produção técnica e operacional de elite.</p>
+</div>
+<div class="relative z-10 flex-1 text-center group">
+<div class="w-20 h-20 bg-surface-container mx-auto flex items-center justify-center border border-outline-variant group-hover:border-primary transition-all duration-500 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">query_stats</span>
+</div>
+<h4 class="font-headline font-bold text-white uppercase tracking-widest text-sm mb-4" data-step="4">Otimização</h4>
+<p class="text-on-surface-variant text-xs font-label">Ajuste fino baseado em métricas de performance.</p>
+</div>
+<div class="relative z-10 flex-1 text-center group">
+<div class="w-20 h-20 bg-primary mx-auto flex items-center justify-center mb-8">
+<span class="material-symbols-outlined text-on-primary text-3xl">trending_up</span>
+</div>
+<h4 class="font-headline font-bold text-white uppercase tracking-widest text-sm mb-4" data-step="5">Crescimento</h4>
+<p class="text-on-surface-variant text-xs font-label">Escala previsível e dominação de mercado.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Founders Section -->
+<section class="py-32 px-6 md:px-12 bg-surface" id="about">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="order-2 lg:order-1 relative" data-aos="zoom-in">
+<img class="w-full aspect-[4/5] object-cover grayscale-0 brightness-100" data-alt="Two men wearing polo shirts with the TEX logo in the office" src="tex_founders.png"/>
+<div class="absolute inset-0 border-[24px] border-primary/10 translate-x-8 translate-y-8 -z-10"></div>
+</div>
+<div class="order-1 lg:order-2" data-aos="fade-left">
+<span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">Founders</span>
+<h2 class="font-headline text-4xl md:text-6xl font-bold text-white tracking-tighter mb-8">
+                        Visão &amp; <br/>Arquitetura Digital
+                    </h2>
+<p class="font-body text-on-surface-variant text-lg leading-relaxed mb-8">
+                        A Tex Agência nasceu da fusão entre a sensibilidade estética do audiovisual de luxo e a precisão técnica do marketing de performance. 
+                    </p>
+<p class="font-body text-on-surface-variant text-lg leading-relaxed mb-12">
+                        Nossos fundadores trouxeram a expertise de grandes incorporadoras para criar um método que não apenas comunica, mas constrói valor real.
+                    </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-px bg-primary"></div>
+<span class="font-headline font-bold text-white uppercase tracking-widest text-sm">Tex Core Team</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Partners / Cases Section -->
+<section class="py-24 overflow-hidden bg-surface-container-lowest border-y border-outline-variant/10 relative" id="cases">
+    <div class="absolute inset-y-0 left-0 w-32 md:w-56 bg-gradient-to-r from-surface-container-lowest to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-32 md:w-56 bg-gradient-to-l from-surface-container-lowest to-transparent z-10 pointer-events-none"></div>
+
+    <div class="max-w-[1920px] mx-auto px-6 md:px-12 mb-16 relative z-10" data-aos="fade-up">
+        <span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">Cases</span>
+        <h2 class="font-headline text-4xl md:text-6xl font-bold text-white tracking-tighter">Quem já cresceu<br/>com a TEX</h2>
+    </div>
+
+    <!-- Marquee — duplique os itens abaixo para adicionar mais parceiros -->
+    <!-- Para trocar a imagem: substitua o atributo src por uma URL de foto/logo real -->
+    <div class="marquee-track">
+
+        <!-- ======= GRUPO 1 ======= -->
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Construtora+Omega&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Construtora Ômega" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Construtora Ômega</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Construtora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Joao+Figueiredo&background=242424&color=f2ca50&bold=true&size=96" alt="João Figueiredo" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">João Figueiredo</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Prime+Imobiliaria&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Prime Imobiliária" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Prime Imobiliária</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Imobiliária</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Renata+Souza&background=242424&color=f2ca50&bold=true&size=96" alt="Renata Souza" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Renata Souza</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=RealTech+Inc&background=1a1a1a&color=d4af37&bold=true&size=96" alt="RealTech Incorporações" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">RealTech Incorporações</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Incorporadora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Marco+Vitor&background=242424&color=f2ca50&bold=true&size=96" alt="Marco Vitor" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Marco Vitor</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Grupo+Edificar&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Grupo Edificar" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Grupo Edificar</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Construtora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Leticia+Andrade&background=242424&color=f2ca50&bold=true&size=96" alt="Letícia Andrade" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Letícia Andrade</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Atlas+Incorporadora&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Atlas Incorporadora" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Atlas Incorporadora</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Incorporadora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Felipe+Monteiro&background=242424&color=f2ca50&bold=true&size=96" alt="Felipe Monteiro" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Felipe Monteiro</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <!-- ======= GRUPO 2 — cópia idêntica para loop contínuo ======= -->
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Construtora+Omega&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Construtora Ômega" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Construtora Ômega</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Construtora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Joao+Figueiredo&background=242424&color=f2ca50&bold=true&size=96" alt="João Figueiredo" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">João Figueiredo</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Prime+Imobiliaria&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Prime Imobiliária" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Prime Imobiliária</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Imobiliária</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Renata+Souza&background=242424&color=f2ca50&bold=true&size=96" alt="Renata Souza" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Renata Souza</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=RealTech+Inc&background=1a1a1a&color=d4af37&bold=true&size=96" alt="RealTech Incorporações" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">RealTech Incorporações</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Incorporadora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Marco+Vitor&background=242424&color=f2ca50&bold=true&size=96" alt="Marco Vitor" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Marco Vitor</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Grupo+Edificar&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Grupo Edificar" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Grupo Edificar</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Construtora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Leticia+Andrade&background=242424&color=f2ca50&bold=true&size=96" alt="Letícia Andrade" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Letícia Andrade</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Atlas+Incorporadora&background=1a1a1a&color=d4af37&bold=true&size=96" alt="Atlas Incorporadora" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Atlas Incorporadora</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Incorporadora</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+        <div class="flex items-center gap-5 flex-shrink-0 px-10">
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/30">
+                <img src="https://ui-avatars.com/api/?name=Felipe+Monteiro&background=242424&color=f2ca50&bold=true&size=96" alt="Felipe Monteiro" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+            </div>
+            <div>
+                <p class="font-headline text-sm font-bold text-white/75 whitespace-nowrap uppercase tracking-wide">Felipe Monteiro</p>
+                <p class="font-label text-[10px] text-primary/50 uppercase tracking-[0.2em]">Corretor Autônomo</p>
+            </div>
+        </div>
+        <div class="flex-shrink-0 h-6 w-px bg-outline-variant/25 mx-2"></div>
+
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-32 px-6 bg-surface-container-high border-y border-outline-variant/30">
+<div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+<h2 class="font-headline text-4xl md:text-7xl font-bold text-white tracking-tighter mb-12">Pronto para dominar o seu mercado?</h2>
+<p class="font-body text-on-surface-variant text-xl mb-12 font-light">
+                    O primeiro passo para a escala começa com um diagnóstico preciso da sua operação. Reserve seu horário agora.
+                </p>
+<button class="gold-gradient text-on-primary font-headline font-bold uppercase tracking-[0.2em] text-sm px-16 py-6 transition-all transform hover:scale-105">
+                    Reservar Diagnóstico Gratuito
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest py-24 px-12 border-t border-white/5">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+<div class="lg:col-span-1">
+<div class="text-3xl font-black text-primary-container mb-6 font-headline tracking-tighter"><a href="code.html"><img src="logo.png" alt="Tex Agência Oficial" class="w-40 md:w-56 h-auto max-h-20 opacity-80 hover:opacity-100 transition-opacity object-contain object-left"></a></div>
+<p class="font-body text-sm tracking-wide text-white/50 leading-relaxed">
+                    © 2024 Tex Agência. The Architectural Monolith of Real Estate Growth.
+                </p>
+</div>
+<div>
+<h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Sitemap</h5>
+<ul class="space-y-4">
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Services</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Process</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Cases</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">About</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="planos.html">Planos</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Legal</h5>
+<ul class="space-y-4">
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Privacy Policy</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-headline font-bold text-white uppercase tracking-widest text-xs mb-8">Connect</h5>
+<ul class="space-y-4">
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">LinkedIn</a></li>
+<li><a class="text-white/40 hover:text-primary transition-colors font-body text-sm" href="#">Instagram</a></li>
+</ul>
+</div>
+</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true, offset: 60, duration: 900, easing: 'ease-out-quart' });
+
+    // Nav scroll state
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        navEl.classList.toggle('nav-scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // Hero parallax
+    const heroBg = document.querySelector('.hero-parallax');
+    if (heroBg) {
+        window.addEventListener('scroll', () => {
+            heroBg.style.transform = `translateY(${window.scrollY * 0.2}px)`;
+        }, { passive: true });
+    }
+
+    // Counter animation
+    const runCounter = (el) => {
+        const target = parseFloat(el.dataset.counter);
+        const suffix = el.dataset.counterSuffix || '';
+        const prefix = el.dataset.counterPrefix || '';
+        const duration = 1800;
+        const start = performance.now();
+        const isInt = Number.isInteger(target);
+        const tick = (now) => {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = prefix + (isInt ? Math.round(eased * target) : (eased * target).toFixed(1)) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    };
+    const counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { runCounter(e.target); counterObs.unobserve(e.target); }
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-counter]').forEach(el => counterObs.observe(el));
+
+    // Process line draw
+    const processLine = document.querySelector('.process-line');
+    if (processLine) {
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) { processLine.classList.add('is-visible'); }
+        }, { threshold: 0.3 }).observe(processLine);
+    }
+
+    // Process steps stagger
+    document.querySelectorAll('[data-step]').forEach((el, i) => {
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) {
+                setTimeout(() => el.classList.add('step-visible'), i * 110);
+            }
+        }, { threshold: 0.1 }).observe(el);
+    });
+</script>
+</body></html>
