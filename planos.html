@@ -123,17 +123,19 @@
 
         .modal-input {
             width: 100%;
-            background: rgba(255,255,255,0.035);
-            border: 1px solid rgba(77,70,53,0.4);
-            color: #e2e2e2;
+            background: #1c1c1c !important;
+            border: 1px solid rgba(77,70,53,0.45) !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            color: #e2e2e2 !important;
             font-family: 'Manrope', sans-serif;
             font-size: 0.875rem;
             padding: 0.875rem 1rem;
             outline: none;
             transition: border-color 0.3s;
         }
-        .modal-input:focus { border-color: rgba(242,202,80,0.55); }
-        .modal-input::placeholder { color: rgba(224,224,224,0.28); }
+        .modal-input:focus { border-color: rgba(242,202,80,0.6) !important; box-shadow: none !important; }
+        .modal-input::placeholder { color: rgba(180,165,140,0.55) !important; }
 
         .opt-label {
             display: flex; align-items: center; gap: 0.75rem;
@@ -492,7 +494,7 @@
     });
 
     // ── Quote Modal ──
-    const TEX_WA = '5511999999999'; // ← Substitua pelo número real (com código do país, sem espaços)
+    const TEX_WA = '5511991469943';
 
     const SERVICES = {
         corretor:      ['Gestão de Tráfego Pago','Social Media & Conteúdo','Produção Audiovisual','Identidade Visual','Consultoria Estratégica'],
