@@ -97,6 +97,68 @@
         #mobile-menu-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         #mobile-menu-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         #mobile-menu-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); width: 24px; }
+
+        /* ── Modal ── */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(10px);
+            display: flex; align-items: flex-start; justify-content: center;
+            overflow-y: auto; padding: 5rem 1rem 2rem;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .modal-overlay.is-open { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: #191919;
+            border: 1px solid rgba(77,70,53,0.45);
+            width: 100%; max-width: 560px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            animation: modalIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+            margin: auto;
+        }
+        @media (min-width: 640px) { .modal-box { padding: 2.5rem; } }
+        @keyframes modalIn { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .modal-input {
+            width: 100%;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(77,70,53,0.4);
+            color: #e2e2e2;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.875rem;
+            padding: 0.875rem 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .modal-input:focus { border-color: rgba(242,202,80,0.55); }
+        .modal-input::placeholder { color: rgba(224,224,224,0.28); }
+
+        .opt-label {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.7rem 1rem;
+            border: 1px solid rgba(77,70,53,0.3);
+            background: rgba(255,255,255,0.02);
+            cursor: pointer;
+            transition: border-color 0.22s, background 0.22s, color 0.22s;
+            font-size: 0.8125rem;
+            color: rgba(224,224,224,0.65);
+            font-family: 'Manrope', sans-serif;
+            user-select: none;
+        }
+        .opt-label:hover { border-color: rgba(242,202,80,0.38); background: rgba(242,202,80,0.04); color: #e2e2e2; }
+        .opt-label.sel { border-color: rgba(242,202,80,0.65); background: rgba(242,202,80,0.09); color: #f2ca50; }
+        .opt-dot { width: 14px; height: 14px; border: 1.5px solid currentColor; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color 0.22s; }
+        .opt-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #f2ca50; transform: scale(0); transition: transform 0.2s; }
+        .opt-label.sel .opt-dot::after { transform: scale(1); }
+        .opt-sq { width: 14px; height: 14px; border: 1.5px solid currentColor; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color 0.22s; }
+        .opt-sq::after { content: '✓'; font-size: 9px; color: #f2ca50; opacity: 0; transition: opacity 0.2s; }
+        .opt-label.sel .opt-sq::after { opacity: 1; }
+
+        .step-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(77,70,53,0.5); transition: background 0.3s; }
+        .step-pip.on { background: #f2ca50; }
+        .step-line { flex: 1; height: 1px; background: rgba(77,70,53,0.3); }
     </style>
 </head>
 <body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary antialiased">
@@ -173,7 +235,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Estratégica</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('corretor','individual')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Combinados -->
@@ -188,7 +250,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + Consultoria</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('corretor','combinado')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Pacote Corretor -->
@@ -205,7 +267,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Quinzenal</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Relatórios de Performance</span></li>
                 </ul>
-                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+                <button onclick="openQuote('corretor','pacote')" class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
             </div>
         </div>
     </section>
@@ -243,7 +305,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual Corporativa</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM & Automações</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('imobiliaria','individual')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Combinados -->
@@ -258,7 +320,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM + Tráfego</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('imobiliaria','combinado')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Pacote Imobiliária -->
@@ -275,7 +337,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">CRM e Automação de Leads</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Mensal & Relatórios</span></li>
                 </ul>
-                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+                <button onclick="openQuote('imobiliaria','pacote')" class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
             </div>
         </div>
     </section>
@@ -313,7 +375,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Identidade Visual do Empreendimento</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria de Posicionamento</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('incorporadora','individual')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Combinados -->
@@ -328,7 +390,7 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Tráfego + CRM</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Combinações sob medida</span></li>
                 </ul>
-                <button class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
+                <button onclick="openQuote('incorporadora','combinado')" class="w-full border border-primary hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto">Solicitar Cotação</button>
             </div>
 
             <!-- Pacote Empresa -->
@@ -345,12 +407,22 @@
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Consultoria Estratégica</span></li>
                     <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span><span class="text-sm font-light text-white/80">Board Advisory (opcional)</span></li>
                 </ul>
-                <button class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
+                <button onclick="openQuote('incorporadora','pacote')" class="w-full gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4 mt-auto hover:scale-105 transition-transform duration-300">Solicitar Cotação</button>
             </div>
         </div>
     </section>
 
 </main>
+
+<!-- ── Quote Modal ── -->
+<div id="quote-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modal-box">
+    <button onclick="closeModal()" aria-label="Fechar" class="absolute top-4 right-4 w-9 h-9 flex items-center justify-center text-white/35 hover:text-white transition-colors">
+      <span class="material-symbols-outlined text-xl">close</span>
+    </button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="bg-surface-container-lowest py-16 px-6 md:px-12 border-t border-white/5">
@@ -418,6 +490,195 @@
             if (e.isIntersecting) { el.classList.add('is-visible'); }
         }, { threshold: 0.5 }).observe(el);
     });
+
+    // ── Quote Modal ──
+    const TEX_WA = '5511999999999'; // ← Substitua pelo número real (com código do país, sem espaços)
+
+    const SERVICES = {
+        corretor:      ['Gestão de Tráfego Pago','Social Media & Conteúdo','Produção Audiovisual','Identidade Visual','Consultoria Estratégica'],
+        imobiliaria:   ['Gestão de Tráfego para Captação','Social Media Corporativa','Audiovisual de Imóveis','Identidade Visual Corporativa','CRM & Automações'],
+        incorporadora: ['Campanha de Lançamento','Audiovisual Cinematográfico','Filmagem com Drone & IA','Identidade Visual do Empreendimento','Consultoria de Posicionamento']
+    };
+
+    const PROFILE_LABELS = { corretor:'Corretor', imobiliaria:'Imobiliária', incorporadora:'Incorporadora & Construtora' };
+    const TYPE_LABELS    = { individual:'Serviço Individual', combinado:'Serviços Combinados', pacote:'Pacote Completo' };
+
+    const QUESTIONS = {
+        corretor: [
+            { id:'q_perfil',  label:'Você se identifica como…',            opts:['Corretor(a) autônomo(a)','Faço parte de uma imobiliária','Tenho minha própria imobiliária'] },
+            { id:'q_volume',  label:'Imóveis fechados por mês (média)',     opts:['Menos de 1','1 a 3','3 a 6','Mais de 6'] },
+            { id:'q_ticket',  label:'Ticket médio dos imóveis que vende',   opts:['Até R$ 300 mil','R$ 300k – R$ 500k','R$ 500k – R$ 1 milhão','Acima de R$ 1 milhão'] },
+            { id:'q_dor',     label:'Sua maior dificuldade hoje',           opts:['Gerar leads qualificados','Criar conteúdo profissional','Converter leads em clientes','Manter presença digital consistente'] },
+            { id:'q_exp',     label:'Experiência com marketing imobiliário',opts:['Nunca utilizei','Já utilizei e parei','Utilizo e estou insatisfeito(a)','Utilizo e quero escalar'] }
+        ],
+        imobiliaria: [
+            { id:'q_equipe',  label:'Corretores na sua equipe',             opts:['1 a 5','6 a 15','16 a 30','Mais de 30'] },
+            { id:'q_ticket',  label:'Ticket médio dos imóveis comercializados', opts:['Até R$ 300 mil','R$ 300k – R$ 500k','R$ 500k – R$ 1 milhão','Acima de R$ 1 milhão'] },
+            { id:'q_dor',     label:'Sua maior dificuldade hoje',           opts:['Gerar leads qualificados','Diferenciar a marca no mercado','Converter leads em vendas','Manter presença digital consistente'] },
+            { id:'q_exp',     label:'Experiência com agência de marketing', opts:['Nunca utilizei','Já utilizei e parei','Utilizo e estou insatisfeito(a)','Utilizo e quero crescer'] }
+        ],
+        incorporadora: [
+            { id:'q_fase',    label:'Fase atual do empreendimento',         opts:['Pré-lançamento','Lançamento','Em obras','Pronto para morar','Múltiplos empreendimentos'] },
+            { id:'q_vgv',     label:'VGV estimado do empreendimento',       opts:['Até R$ 5 milhões','R$ 5M – R$ 20M','R$ 20M – R$ 50M','Acima de R$ 50M'] },
+            { id:'q_dor',     label:'Sua maior dificuldade hoje',           opts:['Gerar leads qualificados','Posicionamento do empreendimento','Conteúdo audiovisual de impacto','Velocidade de vendas'] },
+            { id:'q_exp',     label:'Experiência com marketing de lançamento', opts:['Nunca trabalhei com agência especializada','Trabalhei e parei','Trabalho e estou insatisfeito(a)','Trabalho e quero escalar'] }
+        ]
+    };
+
+    const TICKET_Q = { id:'q_ticket_comb', label:'Ticket médio dos imóveis / empreendimentos', opts:['Até R$ 300 mil','R$ 300k – R$ 500k','R$ 500k – R$ 1 milhão','R$ 1M – R$ 2M','R$ 2M – R$ 5M','Acima de R$ 5M'] };
+
+    let qState = { profile:'', type:'', step:1, selected:[] };
+
+    function openQuote(profile, type) {
+        qState = { profile, type, step: type === 'pacote' ? 2 : 1, selected: [] };
+        renderModal();
+        document.getElementById('quote-modal').classList.add('is-open');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal() {
+        document.getElementById('quote-modal').classList.remove('is-open');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    document.getElementById('quote-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    function renderModal() {
+        document.getElementById('modal-inner').innerHTML =
+            qState.step === 1 ? buildStep1() : buildStep2();
+        bindOpts();
+        document.getElementById('quote-modal').scrollTop = 0;
+    }
+
+    function stepPips(current, total) {
+        if (total < 2) return '';
+        let h = '<div class="flex items-center gap-2 mb-8">';
+        for (let i = 1; i <= total; i++) {
+            if (i > 1) h += '<div class="step-line"></div>';
+            h += `<div class="step-pip ${current >= i ? 'on' : ''}"></div>`;
+        }
+        return h + '</div>';
+    }
+
+    function buildStep1() {
+        const isRadio = qState.type === 'individual';
+        const svcs = SERVICES[qState.profile];
+        const optsHTML = svcs.map(s => `
+            <div class="opt-label" data-svc="${s}">
+                ${isRadio ? '<div class="opt-dot"></div>' : '<div class="opt-sq"></div>'}
+                <span>${s}</span>
+            </div>`).join('');
+        return `
+            <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-4">${TYPE_LABELS[qState.type]} · ${PROFILE_LABELS[qState.profile]}</span>
+            <h3 class="font-headline text-xl font-bold text-white tracking-tight mb-1">${isRadio ? 'Qual serviço você precisa?' : 'Quais serviços deseja combinar?'}</h3>
+            <p class="font-body text-xs text-on-surface-variant font-light mb-6">${isRadio ? 'Selecione um serviço para receber sua proposta.' : 'Selecione dois ou mais serviços para montar sua estratégia.'}</p>
+            ${stepPips(1, 2)}
+            <div class="space-y-2 mb-8" id="svc-opts">${optsHTML}</div>
+            <p id="step1-err" class="text-red-400 text-xs mb-3 hidden">Selecione ao menos um serviço para continuar.</p>
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 border border-outline-variant/40 text-white/45 hover:text-white hover:border-white/25 transition-all font-headline font-bold uppercase tracking-widest text-xs py-4">Cancelar</button>
+                <button onclick="goStep2()" class="flex-1 gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4">Próximo →</button>
+            </div>`;
+    }
+
+    function buildStep2() {
+        const isPacote = qState.type === 'pacote';
+        const isComb   = qState.type === 'combinado';
+        const qs = [...QUESTIONS[qState.profile]];
+        if (isComb) {
+            const hasTicket = qs.some(q => q.id === 'q_ticket');
+            if (!hasTicket) qs.splice(2, 0, TICKET_Q);
+        }
+
+        const qHTML = qs.map(q => `
+            <div class="mb-5">
+                <p class="font-headline text-[11px] font-bold text-white/70 uppercase tracking-wider mb-2">${q.label}</p>
+                <div class="space-y-1.5">
+                    ${q.opts.map(o => `
+                        <div class="opt-label" data-qid="${q.id}" data-val="${o}">
+                            <div class="opt-dot"></div>
+                            <span>${o}</span>
+                        </div>`).join('')}
+                </div>
+            </div>`).join('');
+
+        const backBtn = !isPacote
+            ? `<button onclick="goStep1()" class="flex-1 border border-outline-variant/40 text-white/45 hover:text-white hover:border-white/25 transition-all font-headline font-bold uppercase tracking-widest text-xs py-4">← Voltar</button>`
+            : `<button onclick="closeModal()" class="flex-1 border border-outline-variant/40 text-white/45 hover:text-white hover:border-white/25 transition-all font-headline font-bold uppercase tracking-widest text-xs py-4">Cancelar</button>`;
+
+        return `
+            <span class="inline-block font-label text-[10px] uppercase tracking-[0.25em] text-primary/70 border border-primary/30 px-3 py-1 mb-4">${TYPE_LABELS[qState.type]} · ${PROFILE_LABELS[qState.profile]}</span>
+            <h3 class="font-headline text-xl font-bold text-white tracking-tight mb-1">Seus dados & contexto</h3>
+            <p class="font-body text-xs text-on-surface-variant font-light mb-6">Preencha para receber uma proposta personalizada via WhatsApp.</p>
+            ${stepPips(2, isPacote ? 1 : 2)}
+            <div class="space-y-2.5 mb-7">
+                <input class="modal-input" id="f_nome"    type="text" placeholder="Nome completo *" />
+                <input class="modal-input" id="f_wa"      type="tel"  placeholder="WhatsApp com DDD *" />
+                <input class="modal-input" id="f_empresa" type="text" placeholder="Empresa ou marca pessoal" />
+            </div>
+            ${qHTML}
+            <p id="step2-err" class="text-red-400 text-xs mb-3 hidden">Preencha nome e WhatsApp para continuar.</p>
+            <div class="flex gap-3 mt-6">
+                ${backBtn}
+                <button onclick="submitQuote()" class="flex-1 gold-gradient text-on-primary font-headline font-bold uppercase tracking-widest text-xs py-4">Enviar pelo WhatsApp →</button>
+            </div>`;
+    }
+
+    function bindOpts() {
+        // Service opts (step 1)
+        document.querySelectorAll('#svc-opts .opt-label').forEach(el => {
+            el.addEventListener('click', () => {
+                if (qState.type === 'individual') {
+                    document.querySelectorAll('#svc-opts .opt-label').forEach(x => x.classList.remove('sel'));
+                    el.classList.add('sel');
+                } else {
+                    el.classList.toggle('sel');
+                }
+            });
+        });
+        // Question opts (step 2)
+        document.querySelectorAll('[data-qid]').forEach(el => {
+            el.addEventListener('click', () => {
+                const qid = el.dataset.qid;
+                document.querySelectorAll(`[data-qid="${qid}"]`).forEach(x => x.classList.remove('sel'));
+                el.classList.add('sel');
+            });
+        });
+    }
+
+    function goStep2() {
+        const sel = [...document.querySelectorAll('#svc-opts .opt-label.sel')].map(el => el.dataset.svc);
+        if (!sel.length) { document.getElementById('step1-err').classList.remove('hidden'); return; }
+        qState.selected = sel;
+        qState.step = 2;
+        renderModal();
+    }
+
+    function goStep1() { qState.step = 1; renderModal(); }
+
+    function submitQuote() {
+        const nome    = document.getElementById('f_nome')?.value.trim();
+        const wa      = document.getElementById('f_wa')?.value.trim();
+        const empresa = document.getElementById('f_empresa')?.value.trim() || '—';
+        if (!nome || !wa) { document.getElementById('step2-err').classList.remove('hidden'); return; }
+
+        const qs = qState.type === 'combinado'
+            ? (() => { const arr = [...QUESTIONS[qState.profile]]; if (!arr.some(q => q.id==='q_ticket')) arr.splice(2,0,TICKET_Q); return arr; })()
+            : QUESTIONS[qState.profile];
+
+        const answers = qs.map(q => {
+            const el = document.querySelector(`[data-qid="${q.id}"].sel`);
+            return `*${q.label}:* ${el ? el.dataset.val : '—'}`;
+        }).join('\n');
+
+        const svcLine = qState.selected.length ? `*Serviço(s):* ${qState.selected.join(' + ')}\n` : '';
+
+        const msg = `*SOLICITAÇÃO DE COTAÇÃO — TEX AGÊNCIA*\n\n*Perfil:* ${PROFILE_LABELS[qState.profile]}\n*Tipo:* ${TYPE_LABELS[qState.type]}\n${svcLine}\n*Nome:* ${nome}\n*WhatsApp:* ${wa}\n*Empresa / Marca:* ${empresa}\n\n${answers}\n\n_Via site-tex.vercel.app/planos_`;
+        window.open(`https://wa.me/${TEX_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+        closeModal();
+    }
 
     // Mobile menu
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
