@@ -106,8 +106,8 @@
 
         ::selection { background: #f2ca50; color: #131313; }
 
-        html { scroll-behavior: smooth; }
-        body { animation: pageReveal 0.55s ease forwards; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { animation: pageReveal 0.55s ease forwards; overflow-x: hidden; max-width: 100%; }
         @keyframes pageReveal { from { opacity: 0; } to { opacity: 1; } }
 
         /* Process line draw */
@@ -189,7 +189,7 @@
 </div>
 <div class="relative z-10 text-center max-w-5xl px-6" data-aos="fade-up" data-aos-duration="1000">
 <span class="inline-block font-label text-primary tracking-[0.3em] uppercase text-xs mb-6 opacity-80">The Architectural Monolith of Growth</span>
-<h1 class="font-headline text-5xl md:text-8xl font-bold tracking-tighter text-white leading-tight mb-8">
+<h1 class="font-headline text-4xl md:text-8xl font-bold tracking-tighter text-white leading-tight mb-8">
                     TRANSFORMANDO EXPERIÊNCIA EM <span class="text-primary-container">RESULTADO</span>
 </h1>
 <p class="font-body text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto mb-12 font-light leading-relaxed">
@@ -412,11 +412,11 @@
 </div>
 </section>
 <!-- Founders Section -->
-<section class="py-16 md:py-32 px-6 md:px-12 bg-surface" id="about">
+<section class="py-16 md:py-32 px-6 md:px-12 bg-surface overflow-hidden" id="about">
 <div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 <div class="order-2 lg:order-1 relative" data-aos="zoom-in">
 <img class="w-full aspect-[4/5] object-cover grayscale-0 brightness-100" data-alt="Two men wearing polo shirts with the TEX logo in the office" src="tex_founders.png"/>
-<div class="absolute inset-0 border-[24px] border-primary/10 translate-x-8 translate-y-8 -z-10"></div>
+<div class="absolute inset-0 border-[24px] border-primary/10 md:translate-x-8 md:translate-y-8 -z-10"></div>
 </div>
 <div class="order-1 lg:order-2" data-aos="fade-left">
 <span class="font-label text-primary tracking-[0.2em] uppercase text-xs mb-4 block">Founders</span>
